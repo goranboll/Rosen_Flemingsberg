@@ -13,6 +13,7 @@ namespace Rosen.Controllers
 
         public ActionResult Index()
         {
+            var gubbe = "glenn";
             return View();
         }
 
