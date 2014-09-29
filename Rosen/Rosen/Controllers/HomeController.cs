@@ -16,5 +16,14 @@ namespace Rosen.Controllers
             return View();
         }
 
+        public ActionResult korvAPI()
+        {
+            var korvar = "bratvurst";
+
+            return View(korvar);
+
+
+        }
+
     }
 }
