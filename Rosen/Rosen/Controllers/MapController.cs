@@ -6,20 +6,18 @@ using System.Web.Mvc;
 
 namespace Rosen.Controllers
 {
-    public class HomeController : Controller
+    public class MapController : Controller
     {
-        //
-        // GET: /Home/
+       
 
         public ActionResult Index()
         {
-
-
-
-           return RedirectToAction("Index", "Map");
+            
+            
+            return View();
         }
 
-       
+
 
     }
 }
