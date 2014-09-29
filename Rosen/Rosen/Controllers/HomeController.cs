@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rosen.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,18 @@ namespace Rosen.Controllers
     {
         //
         // GET: /Home/
+        private Service _service;
+
+        private Service Service
+        {
+            get { return _service ?? (_service = new Service()); }
+        }
 
         public ActionResult Index()
         {
-
-
-
-           return RedirectToAction("Index", "Map");
+            var model = Service.GenerateMap();
+            return Json(model, JsonRequestBehavior.AllowGet);
+          // return RedirectToAction("Index", "Map");
         }
 
        
