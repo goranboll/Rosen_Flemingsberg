@@ -19,7 +19,9 @@ namespace Rosen.Controllers
 
         public ActionResult korvAPI()
         {
-            var korvar = "sibyllakorv";
+
+            var korvar = "chorizo";
+
 
             return View(korvar);
 
