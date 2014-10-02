@@ -75,7 +75,7 @@ namespace Rosen.Models
                 new MapTile()
                 {
                     PositionX = 3,
-                    PositionY = 12
+                    PositionY = 10
                 });
             list.Add(
                 new MapTile()
@@ -93,13 +93,14 @@ namespace Rosen.Models
                 new MapTile()
                 {
                     PositionX = 14,
-                    PositionY = 12
+                    PositionY = 10
                 });
             return list;
         }
 
         private List<MapTile> GetAllMapTiles()
         {
+            var tileId = 0;
             var rand = new Random();
             var mapTiles = new List<MapTile>();
             for (var x = 1; x <= 16; x++)
@@ -109,7 +110,7 @@ namespace Rosen.Models
 
 
                     var tile = new MapTile();
-                    
+                    tile.TileId = tileId++;
                     tile.PositionX = x;
                     tile.PositionY = y;
                    
@@ -174,7 +175,20 @@ namespace Rosen.Models
         {
             var tiles = GetAllMapTiles();
 
-            return tiles.Where(t => t.CategoryType == "Special" && t.TileType == "HQ").ToList();
+            return tiles.OrderBy(t => t.PositionY ).ThenBy(t => t.PositionX).ToList();
+        }
+        public List<Vehicle> GetVehicles()
+        {
+
+            var list = new List<Vehicle>();
+            var vehicle = new Vehicle();
+            vehicle.TileId = 5;
+            vehicle.Name = "Skoda";
+            vehicle.Speed = 18;
+            vehicle.Type = "Car";
+            list.Add(vehicle);
+            return list;
+
         }
     }
 }

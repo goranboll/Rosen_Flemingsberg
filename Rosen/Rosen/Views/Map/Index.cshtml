@@ -1,6 +1,20 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
+   
 }
 
-<h2>kart Index</h2>
+<script>
+    var address = "@Url.Action("GetMapData")";
+</script>
+<div ng-app="app">
+    <div ng-controller="testController">
+        <div class="map">
+            <div ng-repeat="data in mapData" class="tile {{data.CategoryType}}" id="tile{{data.TileId}}">
+                {{data.TileType}} : {{data.TileId}} <br />
+                {{data.PositionX}} : {{data.PositionY}}
+            </div>
+        </div>
+        
+    </div>
+</div>
+<h2>Index</h2>
