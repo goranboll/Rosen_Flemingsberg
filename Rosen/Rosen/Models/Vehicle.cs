@@ -12,6 +12,7 @@ namespace Rosen.Models
         public int UserId { get; set; }
         public string Name { get; set; }
         public int Speed { get; set; }
-        public int TileId { get; set; }
+        public MapTile MapTile { get; set; }
+        public float FuelAmount { get; set; }
     }
 }

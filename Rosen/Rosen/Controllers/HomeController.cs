@@ -20,12 +20,15 @@ namespace Rosen.Controllers
 
         public ActionResult Index()
         {
+            int[] test = new int[10] { 1, 22, 13, 401, 25, 63, 17, 180, 99, 140 };
+            
+            
             var model = Service.GenerateMap();
             return Json(model, JsonRequestBehavior.AllowGet);
           // return RedirectToAction("Index", "Map");
         }
 
-       
+        
 
     }
 }

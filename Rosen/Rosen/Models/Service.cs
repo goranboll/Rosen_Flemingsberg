@@ -182,12 +182,28 @@ namespace Rosen.Models
 
             var list = new List<Vehicle>();
             var vehicle = new Vehicle();
-            vehicle.TileId = 5;
+            vehicle.MapTile = GetMapTile(5);
             vehicle.Name = "Skoda";
             vehicle.Speed = 18;
             vehicle.Type = "Car";
+            vehicle.FuelAmount = 20; 
             list.Add(vehicle);
             return list;
+
+        }
+
+        public MapTile GetMapTile(int id)
+        {
+            return new MapTile()
+            {
+                PositionX = 6,
+                PositionY = 6,
+                TileId = 65,
+                
+
+
+            };
+
 
         }
     }

@@ -4,14 +4,17 @@
 }
 
 <script>
-    var address = "@Url.Action("GetMapData")";
+    var getmapdata = "@Url.Action("GetMapData")";
+    var postvehiclemove = "@Url.Action("PostVehicleMove")";
 </script>
 <div ng-app="app">
     <div ng-controller="testController">
         <div class="map">
             <div ng-repeat="data in mapData" class="tile {{data.CategoryType}}" id="tile{{data.TileId}}">
+                <div class="layer">
                 {{data.TileType}} : {{data.TileId}} <br />
                 {{data.PositionX}} : {{data.PositionY}}
+                </div>
             </div>
         </div>
         

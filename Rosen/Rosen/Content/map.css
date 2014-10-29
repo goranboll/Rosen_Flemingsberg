@@ -21,3 +21,18 @@
 .Special {
     background-color:#f8bc3f
 }
+.Car {
+
+    background-color:#808080;
+}
+.unreachable {
+    background-color:rgba(0,0,0,0.7);
+    cursor:crosshair;
+}
+.reachable {
+    cursor:pointer;
+}
+.layer {
+    width:100%;
+    height:100%;
+}
