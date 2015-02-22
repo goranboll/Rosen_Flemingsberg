@@ -16,12 +16,19 @@ window.onload = function () {
     $("#maparea").css("width", $(document).width());
     $("#maparea").css("height", $(document).height());
 
+
     user = { "name": "Mathias Fredriksson", "gangid": 1, "color": "B35DED" }
 
 
     $(".user").append("<span>" + user.name + " | <span class='usercolor'>....</span> | Logga ut</span>");
     $(".usercolor").css("color", "#" + user.color);
     $(".usercolor").css("background-color", "#" + user.color);
+
+    $("#gotohq").on("click", function () {
+        var element = $("." + user.gangid + "hq");
+        GoToItem(element);
+    });
+
 
     generateTiles();
 
@@ -39,12 +46,14 @@ function rendergangmembers() {
             if (user.color == tiles[i].items[k].color) {
                 var span = document.createElement("span");
                 $(span).html(tiles[i].items[k].name + "| ");
-                
+
                 span.onclick = (function () {
-                    var currentk = tiles[i].items[k];
+                    var currentk = tiles[i];
                     return function () {
-                        GoToItem(currentk.id);
-                       //alert(currentk.id);
+
+                        var elm = $("#tile" + currentk.id);
+                        GoToItem(elm);
+                        //alert(currentk.id);
                     }
                 })();
                 $(".homies").append(span);
@@ -277,7 +286,9 @@ function ShowItemInfo(item) {
     $("#ItemInfo").slideDown();
 
     //alert(item.id);
-    GoToItem(item.id);
+    var element = $("#" + item.id).parent().parent();
+    GoToItem(element);
+   // GoToItem(item.id);
     var energy = item.energy;
 
     $(".energylevel").html(energy);
@@ -373,6 +384,18 @@ function generateTiles() {
 
     var content = document.getElementById("content");
 
+    var gangs = [
+        { id: 1, gangcolor: "1AFCF0" },
+        { id: 2, gangcolor: "E8F908" },
+        { id: 3, gangcolor: "EB7465" },
+        { id: 4, gangcolor: "6BB7DD" },
+        { id: 5, gangcolor: "1EFA3F" },
+        { id: 6, gangcolor: "FABF1E" },
+        { id: 7, gangcolor: "B35DED" },
+        { id: 8, gangcolor: "DB42C7" },
+
+        ];
+
     startwidth = 1600;
     var width = 1600;
     var height = 0;
@@ -383,7 +406,8 @@ function generateTiles() {
     var business = ["carstore", "weaponstore", "unemploymentoffice", "courthouse", "policestation", "bikeandmopedstore", "hospital", "cityhall"];
     shuffle(business);
     var occupied = false;
-    var gangcolor = "";
+    //var gangcolor = "";
+    var gang = { id: 0, gangcolor: "" };
 
     for (var i = 0; i < 196; i++) {
         var div = document.createElement("div");
@@ -438,46 +462,46 @@ function generateTiles() {
 
         if (i > 10 && y < 5 && x > 8) {
             occupied = true;
-            gangcolor = "1AFCF0";
+            gang = gangs[0];
 
         }
         else if (y > 1 && y < 5 && x > 4 && x < 9) {
             occupied = true;
-            gangcolor = "E8F908";
+            gang = gangs[1];
 
         }
         else if (y > 0 && y < 5 && x < 4) {
             occupied = true;
-            gangcolor = "EB7465";
+            gang = gangs[2];
 
         }
         else if (y > 5 && y < 9 && x < 4) {
             occupied = true;
-            gangcolor = "6BB7DD";
+            gang = gangs[3];
 
         }
         else if (y > 5 && y < 9 && x > 10) {
             occupied = true;
-            gangcolor = "1EFA3F";
+            gang = gangs[4];
 
         }
         else if (y > 9 && x > 10) {
             occupied = true;
-            gangcolor = "FABF1E";
+            gang = gangs[5];
 
         }
         else if (y > 9 && x < 6) {
             occupied = true;
-            gangcolor = "B35DED";
+            gang = gangs[6];
 
         }
         else if (y > 9 && x > 6 && x < 10) {
             occupied = true;
-            gangcolor = "DB42C7";
+            gang = gangs[7];
 
         }
         else {
-            gangcolor = "";
+            gang = { id: 0, gangcolor: "" };
         }
 
         var mapnumber = Math.floor((Math.random() * 6) + 1);
@@ -541,7 +565,10 @@ function generateTiles() {
 
         $(div).addClass("tile");
 
-        $(div).css("background-image", "url('content/imgs/" + gangcolor + "/tile" + mapnumber + ".png')");
+        $(div).addClass(gang.id + mapnumber);
+        $(div).css("background-image", "url('content/imgs/" + gang.gangcolor + "/tile" + mapnumber + ".png')");
+
+        //$(div).css("background-image", "url('content/imgs/" + gangcolor + "/tile" + mapnumber + ".png')");
 
 
         var specialplacement = "none";
@@ -575,8 +602,8 @@ function generateTiles() {
             specialplacement = "right";
         }
 
-        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
-
+       // var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
+        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gang: gang, items: [] }
         tiles.push(tile);
 
         $(div).css("top", height);
@@ -1011,10 +1038,11 @@ function GoToHQ() {
     }
 }
 
-function GoToItem(id) {
+function GoToItem(element) {
 
-    var pos = $("#" + id).parent().parent().position();
+    //var pos = $("#" + id).parent().parent().position();
 
+    var pos = element.position();
     
     movemap(-pos.top+200, -pos.left+500);
             
