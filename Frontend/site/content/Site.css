@@ -1,0 +1,626 @@
+﻿body {
+    font-size: .85em;
+    font-family: Tahoma, Geneva, sans-serif;
+    color: #232323;
+    background-color: #333333;
+    font-weight:100;
+    font-size: 9pt;   
+    margin:0px; 
+    overflow:hidden;
+}
+
+header, footer, nav, section {
+    display: block;
+}
+
+
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+
+a:hover {    
+    text-decoration:underline;
+}
+
+.homies
+{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    
+    
+    }
+
+h2
+{
+    margin:7px;
+    font-size:10pt;
+    text-align:center;
+    }
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+#maparea
+{
+    
+   position:relative;
+   top:0px;
+   left:0px;
+   border:1px solid green;
+   overflow:hidden;
+    }
+
+#content {
+   border: 1px solid red;
+   
+   position: absolute;
+   top:-100px;
+   left:-300px;
+   
+   
+}
+
+
+
+
+
+.tile {
+
+    
+    /*background-size: 120px;*/
+    width: 240px;
+    height: 191px;
+    position: absolute;
+    background-repeat: no-repeat;
+    border: 0px solid red;
+    cursor: pointer;
+    
+   
+ 
+}
+
+.user
+{
+    top:10px;
+    right:10px;
+    
+    }
+
+.userinfo 
+{
+    border: 1px solid rgba(20,19,23,1.0);
+    color: rgba(156,255,0,1.0);
+    font-weight:bolder;
+   
+    background-color: rgba(20,19,23,0.9);
+    border-radius: 4px;
+    text-align:center;
+    margin-bottom:2px;
+    
+    }
+    
+ .energybar
+ {
+     margin: 0px;
+     margin-left:4px;
+     height: 0px;
+     border: 2px solid red;
+     width:35px;
+     }   
+  
+
+.tilebig 
+{
+    text-align: center;
+      font-size: 7pt;
+    background-size: 240px;
+    width: 240px;
+    height: 190px;
+    position: absolute;
+    background-repeat: no-repeat;    
+    cursor: pointer;
+       
+    padding-top:0px; 
+    border:0px solid green;
+}
+
+/*.tilebig img
+{
+    width:16px;
+    }*/
+
+
+.bigtilecontent {
+
+    
+  
+   margin: 0px;
+   margin-top: 27px;
+   padding-top: 15px;
+   text-align: center;
+   
+    height: 95px;
+    width: 120px;
+   
+    
+    color:Red;
+  
+}
+
+
+
+.zoomresources {
+    
+}
+
+
+.highlighted {
+
+    
+   
+    background: url("imgs/white.png");
+    background-color: red;
+    
+ 
+}
+
+.tile2 {    
+    width: 240px;
+    height: 191px;
+    position: absolute;
+    background-repeat: no-repeat;
+    
+    cursor: pointer;
+    
+ 
+}
+
+/*.tilecontent img
+{
+    width: 8%;
+    }*/
+    
+.displaynone
+{
+    display:none;
+    }
+
+.tilecontent {
+
+    
+   border:0px solid pink;
+   margin: 0px;
+   margin-top: 53px;
+   padding-top: 15px;
+   text-align: center;
+   
+    height: 191px;
+    width: 240px;
+    
+    color:Red;
+    
+    
+ 
+    
+   
+    
+   
+}
+
+.red {
+    
+   
+ 
+    background: url('imgs/red.png');
+      background-repeat: no-repeat;
+      background-size: 120px;
+
+}
+
+
+.green {
+   
+    background: url('imgs/green.png');
+   background-size: 120px;
+    background-repeat: no-repeat;
+}
+
+
+.blue {
+
+
+   
+    background: url('imgs/blue.png');
+     background-repeat: no-repeat;
+    background-size: 120px;
+    display: block;
+ 
+   
+}
+
+.dark {
+
+
+   
+    background: url('imgs/dark.png');
+     background-repeat: no-repeat;
+    background-size: 120px;
+    display: block;
+     opacity: 0.34;
+ 
+   
+}
+
+.darker {
+
+
+   
+    background: url('imgs/dark.png');
+     background-repeat: no-repeat;
+    background-size: 240px;
+    display: block;
+     opacity: 0.8;
+     
+ 
+   
+}
+
+
+
+.tilecontent2 {
+
+    display: none;
+    cursor: pointer;
+    border: 0px solid yellow;
+   margin: 0px;
+   
+   padding: 0px;
+   
+    height: 95px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+   
+
+
+ 
+     opacity: 0.5;
+   
+    
+   
+}
+
+/*box*/
+
+.cursorpointer
+{
+    cursor:pointer;
+    }
+
+#curhoname
+{
+    text-align:center;
+    letter-spacing:1px;
+    }
+    
+.usercolor
+{
+    width:10px;
+    height:10px;
+    background-color:Green;
+    border-radius:8px;
+    border:1px solid white;
+    }
+    
+.boxstyle
+{
+    border-radius:6px;   
+    background-color: rgba(17,16,19,0.94);
+    padding:8px;
+    color:White;
+    text-align:center; 
+    border: 0px solid gray; 
+    position: absolute;
+    z-index: 10000;
+    }
+
+.mapcontroller {    
+    
+  
+    bottom: 20px;
+    right: 20px;
+    
+    z-index: 100000;
+    width:70px;
+    height:170px;
+    
+    
+}
+    
+#ItemInfo {    
+    
+    border: 0px solid gray;
+    float:right;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display:none;
+    z-index: 100000000;
+    width:290px;
+    height:420px;
+    border-radius:3px;
+    /*background-color: rgba(255,255,255,0.7);*/
+    background-color: rgba(17,16,19,0.9);
+    padding:8px;
+    color:White;
+    
+}
+
+
+.CWdiv {  
+    cursor:pointer;
+    padding-right:7px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-weight:bold;
+}
+
+.boxheader {
+    width:99%;
+    padding:3px;
+    border: 1px solid gray;
+    border-radius:2px;
+    margin: 0px;
+
+}
+
+#box {
+    padding:5px;
+    width: 760px;   
+    position: absolute;
+    z-index: 100000;
+    background-color: rgba(32,31,36,0.9);
+    border-radius:3px;
+    color: white;
+    display: none;
+    border: 3px solid #111013;
+    box-shadow: 1px 1px 1px #000000;
+    height:490px;
+    top:15px;
+    
+   
+
+}
+.center
+{
+    text-align: center;
+    width:100%;
+    padding:4px;
+    }
+
+#EgyBar
+{
+    
+    }
+    
+.egystyle
+{
+    position: relative;
+    width:270px;
+    border: 1px solid #1D3444;
+    margin:auto;
+    
+    
+    overflow:auto;
+    }
+
+
+    
+.EgyBarFloat
+{
+    float:left;
+    background-color:#2CFA07;
+    border:1px solid #1D3444;
+    width:23px;
+    height:10px;
+    border-right: 0px;
+    }
+    
+    .EgyBarFloatPercent
+{
+    float:left;
+   color:#2CFA07;
+    font-size:7pt;
+    height:10px;
+    margin-left:5px;
+    }
+    
+    .EgyBarFloatline
+{
+    float:left;
+    width:23px;
+    height:5px;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    
+    }
+    
+    .EgyBarFloatscalenumber
+{
+    float:left;
+    width:24px;
+    
+    text-align: right;
+    font-size:6pt;
+    color: #D5DDE2;
+    
+    }
+    
+.ENGYBAR
+{
+    padding:2px;
+    border-radius:3px;
+    background-color:#1D3444;
+    border:1px solid #395060;
+    }
+
+#EBFSP
+{
+    text-align:left;
+    }
+    
+    .EgyBarFloatscalenumberspace
+{
+    float:left;
+    width:5px;
+    height:10px;
+
+    }
+    
+
+#box a {
+    color: white;
+    text-decoration: none;
+}
+
+
+#box a:hover {    
+    text-decoration:underline;
+}
+
+#boxcontent {
+position: relative;
+border:0px solid green;
+
+
+}
+
+.arrow {
+    
+    position: absolute;
+    font-weight:bold;
+    cursor: pointer;
+    z-index:700000;
+    background-size: 30px;
+    background-repeat:no-repeat;
+    width: 30px;
+    height:17px; 
+    border:0px solid green;   
+
+
+}
+
+
+.btn 
+{
+    border:1px solid black;
+    background-color:#F1F1E9;
+    font-size:12pt;
+    text-align:center;
+    border-radius:5px;
+    margin:2px;
+    cursor:pointer;
+    
+    }
+
+#boxarrowtopleft {
+
+    bottom: 40px;
+    left: 10px;
+    background-image: url('imgs/BUTTONS/MapArrowTopLeft.png');
+   
+}
+
+#boxarrowtopright {
+
+    bottom: 40px;  
+    background-image: url('imgs/BUTTONS/MapArrowTopRight.png');
+   
+    right:10px;
+}
+
+
+#boxarrowbottomleft {
+
+    bottom: 10px;
+    left: 10px;
+    background-image: url('imgs/BUTTONS/MapArrowBottomLeft.png');
+    
+}
+
+#boxarrowbottomright {
+
+    bottom: 10px;
+    right: 10px;
+    background-image: url('imgs/BUTTONS/MapArrowBottomRight.png');
+    
+}
+
+
+.itemonmap
+{
+    border:0px solid black;
+    width:60px;
+    font-size:7pt;
+    position:absolute;
+    
+    
+    }
+    
+
+
+

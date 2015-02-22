@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>index</title>
+    <link rel="stylesheet" type="text/css" href="content/Site.css" />
+     <script src="jquery-1.8.2.js" type="text/javascript"></script> 
+     <script src="jquery-ui-1.8.24.js" type="text/javascript"></script> 
+     <!--<script src="jquery.panzoom.js"></script>-->
+
+   
+</head>
+<body>
+<div class="homies boxstyle cursorpointer">
+ 
+</div>
+
+<div class="user boxstyle">
+ 
+</div>
+
+<div class="mapcontroller boxstyle">
+<div><a href="#" onclick="GoToHQ('DB42C7')"><img src="content/imgs/buttons/hq.png" class="cursorpointer"/></a></div>
+<!--<button class="zoom-in btn">+</button>
+<button class="zoom-out btn">-</button>
+
+<button class="reset btn">100%</button>-->
+
+<div id="boxarrowtopleft" class="arrow" onclick="movemap('+=191','+=240')"></div>
+    <div id="boxarrowbottomright" class="arrow"  onclick="movemap('-=191','-=240')"></div>
+    <div id="boxarrowbottomleft" class="arrow" onclick="movemap('-=191','+=240')"></div>
+    <div id="boxarrowtopright" class="arrow" onclick="movemap('+=191','-=240')"></div>
+</div>
+
+
+
+
+<div id="ItemInfo">
+<a href="#" onclick="hideelm('#ItemInfo')">stäng</a>
+                <h2><span id="curhoname"></span></h2>
+                <div class="center">Tillhör Tha Killers</div>
+                 <div class="center"><img id="ITEMIMG" src="content/imgs/hiphop.png" /></div>
+
+                
+                <div class="energylevel"></div>
+                
+                <div id="passengers"></div>
+
+                Gängid: <span id="curhoid"></span><br />
+                Rutnummer: <span id="curhotileid"></span><br />
+                
+                <a id="movecurho" href="#" >Flytta</a><br />
+                <a id="entercar" class="displaynone" href="#" >hoppa in i bil</a>
+                <a id="takethetrain" class="displaynone" href="#">planka tåget</a>
+            
+            </div>
+
+
+<div id="maparea">
+   
+    
+
+<div id="content">
+
+     
+   
+    <div id="box">
+        <!--<div class="boxheader"><span id="boxtitle"></span></div>-->
+        
+        <div id="boxcontent">
+            <div class="CWdiv" onclick="return CloseWindow('box')">X</div>
+            <!--<div id="boxarrowtopleft" class="arrow"></div>
+            <div id="boxarrowbottomright" class="arrow"></div>
+            <div id="boxarrowbottomleft" class="arrow"></div>
+            <div id="boxarrowtopright" class="arrow"></div>-->
+
+        </div>
+           
+    </div>
+</div>
+</div>
+
+
+
+
+
+<script>
+//    $("#content").panzoom({
+//        $zoomIn: $(".zoom-in"),
+//        $zoomOut: $(".zoom-out"),
+//        $zoomRange: $(".zoom-range"),
+//        $reset: $(".reset")
+//        
+//    });
+   
+</script>
+
+
+
+<script type="text/javascript" src="content/maplogic.js"></script>
+
+
+    
+</body>
+</html>
