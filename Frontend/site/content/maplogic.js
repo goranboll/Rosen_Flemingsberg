@@ -31,10 +31,6 @@ window.onload = function () {
 
     rendergangmembers();
 
-    $('#gotohqclicker').on('click', function(){
-        var element = $('.' + user.gangid + 'hq')
-        GoToItem(element);
-    })
 }
 
 function rendergangmembers() {
@@ -47,8 +43,7 @@ function rendergangmembers() {
                 span.onclick = (function () {
                     var currentk = tiles[i].items[k];
                     return function () {
-                        var element = $("#" + currentk.id).parent().parent();
-                        GoToItem(element);
+                        GoToItem(currentk.id);
                        //alert(currentk.id);
                     }
                 })();
@@ -59,6 +54,7 @@ function rendergangmembers() {
 }
 
 function movemap(top, left) {
+
     
     $("#content").animate({
         
@@ -101,7 +97,6 @@ function cuniq() {
 
 
 function generateplayers(numberofplayers) {
-
     var colors = new Array("DB42C7", "B35DED", "1EFA3F", "FABF1E", "EB7465", "6BB7DD", "1AFCF0", "E8F908");
 
     var images = new Array("hiphop.png", "dealer.png", "gang.png", "homie.png");
@@ -246,7 +241,33 @@ function renderItems() {
 
 function hideelm(elm) {
 
-    $(elm).fadeOut(); 
+    $(elm).fadeOut();
+}
+
+function takethetrain(item) {
+
+    var index = tiles[item.tileid].items.indexOf(item);    
+    tiles[item.tileid].items.splice(index, 1);
+
+    var tileid = 107;
+    if (item.tileid == 88) {
+        tileid = 93;       
+    }
+    else if (item.tileid == 107) {
+        tileid = 102;
+    }
+    else if(item.tileid == 93) {
+        tileid = 88;        
+    }
+
+
+    var positions = $("#tile" + tileid).position();
+   
+    
+    item.tileid = tileid;
+    tiles[tileid].items.push(item);
+    movemap(-positions.top + 200, -positions.left + 500);
+     renderItems();
 }
 
 
@@ -256,8 +277,7 @@ function ShowItemInfo(item) {
     $("#ItemInfo").slideDown();
 
     //alert(item.id);
-    var element = $("#" + item.id).parent().parent();
-    GoToItem(element);
+    GoToItem(item.id);
     var energy = item.energy;
 
     $(".energylevel").html(energy);
@@ -266,6 +286,16 @@ function ShowItemInfo(item) {
     $("#curhoid").html(item.gangid);
     $("#curhotileid").html(item.tileid);
     $("#ITEMIMG").attr("src", item.picture);
+
+    if (tiles[item.tileid].tiletype == "trainstation") {
+        $("#takethetrain").css("display", "block");
+        document.getElementById("takethetrain").onclick = function () {
+            takethetrain(item);
+        }       
+    }
+    else {
+        $("#takethetrain").css("display", "none");
+    }
 
     document.getElementById("movecurho").onclick = (function () {
         var currentk = item;
@@ -342,17 +372,7 @@ function EnterCar(car, homie) {
 function generateTiles() {
 
     var content = document.getElementById("content");
-    var gangs = [
-        {id:1 , gangcolor: "1AFCF0"},
-        {id:2 , gangcolor: "E8F908"},
-        {id:3 , gangcolor: "EB7465"},
-        {id:4 , gangcolor: "6BB7DD"},
-        {id:5 , gangcolor: "1EFA3F"},
-        {id:6 , gangcolor: "FABF1E"},
-        {id:7 , gangcolor: "B35DED"},
-        {id:8 , gangcolor: "DB42C7"},
 
-        ];
     startwidth = 1600;
     var width = 1600;
     var height = 0;
@@ -363,7 +383,7 @@ function generateTiles() {
     var business = ["carstore", "weaponstore", "unemploymentoffice", "courthouse", "policestation", "bikeandmopedstore", "hospital", "cityhall"];
     shuffle(business);
     var occupied = false;
-    var gang = {id:0, gangcolor: ""};
+    var gangcolor = "";
 
     for (var i = 0; i < 196; i++) {
         var div = document.createElement("div");
@@ -418,50 +438,46 @@ function generateTiles() {
 
         if (i > 10 && y < 5 && x > 8) {
             occupied = true;
-            //gangcolor = "1AFCF0";
-            gang = gangs[0]
+            gangcolor = "1AFCF0";
 
         }
         else if (y > 1 && y < 5 && x > 4 && x < 9) {
             occupied = true;
-           
-            gang = gangs[1]
+            gangcolor = "E8F908";
+
         }
         else if (y > 0 && y < 5 && x < 4) {
             occupied = true;
-           
-            gang = gangs[2]
+            gangcolor = "EB7465";
 
         }
         else if (y > 5 && y < 9 && x < 4) {
             occupied = true;
-           
-            gang = gangs[3]
+            gangcolor = "6BB7DD";
 
         }
         else if (y > 5 && y < 9 && x > 10) {
             occupied = true;
-            gang = gangs[4]
+            gangcolor = "1EFA3F";
 
         }
         else if (y > 9 && x > 10) {
             occupied = true;
-            gang = gangs[5]
+            gangcolor = "FABF1E";
 
         }
         else if (y > 9 && x < 6) {
             occupied = true;
-            gang = gangs[6]
+            gangcolor = "B35DED";
 
         }
         else if (y > 9 && x > 6 && x < 10) {
             occupied = true;
-            gang = gangs[7]
+            gangcolor = "DB42C7";
 
         }
-        
         else {
-            gang = {id:0, gangcolor:""};
+            gangcolor = "";
         }
 
         var mapnumber = Math.floor((Math.random() * 6) + 1);
@@ -469,7 +485,7 @@ function generateTiles() {
         if (i == 21 || i == 31 || i == 40 || i == 86 || i == 97 || i == 157 || i == 166 || i == 175) {
             mapnumber = "hq";
             tiletype = "hq";
-            
+           
 
            
         }
@@ -481,6 +497,8 @@ function generateTiles() {
             else {
                 mapnumber = "mainstreet2";
             }
+
+           
 
 
             tiletype = "mainstreet";
@@ -498,8 +516,22 @@ function generateTiles() {
             mapnumber = tiletype;
 
         }
+        
         else {
             tiletype = "generic";
+        }
+
+
+        //tågstationer
+        if(i == 102 || i == 107)
+        {
+            mapnumber = "trainstation2";
+            tiletype = "trainstation";
+        }
+
+        if (i == 88 || i == 93) {
+            mapnumber = "trainstation1";
+            tiletype = "trainstation";
         }
 
 
@@ -508,8 +540,8 @@ function generateTiles() {
         //$(tilecontent).html(tiletype);
 
         $(div).addClass("tile");
-        $(div).addClass(gang.id + mapnumber);
-        $(div).css("background-image", "url('content/imgs/" + gang.gangcolor + "/tile" + mapnumber + ".png')");
+
+        $(div).css("background-image", "url('content/imgs/" + gangcolor + "/tile" + mapnumber + ".png')");
 
 
         var specialplacement = "none";
@@ -543,8 +575,7 @@ function generateTiles() {
             specialplacement = "right";
         }
 
-
-        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gang: gang, items: [] }
+        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
 
         tiles.push(tile);
 
@@ -588,278 +619,277 @@ function generateTiles() {
 
 
 
-// function ShowTileInfo(tileid) {
+function ShowTileInfo(tileid) {
 
 
 
-//     $(".tilebig").remove();
+    $(".tilebig").remove();
 
-//     startwidth = 250;
-//     var width = 250;
-//     var height = 0;
-//     var startheight = 0;
-//     var target = document.getElementById("boxcontent");
-
-
-//     var tile = tiles[tileid];
-
-//     $("#boxtitle").html("ruta nummer " + tile.id + ", y:" + tile.y + ", x:" + tile.x + ", tiletype:" + tile.tiletype);
+    startwidth = 250;
+    var width = 250;
+    var height = 0;
+    var startheight = 0;
+    var target = document.getElementById("boxcontent");
 
 
-//     var bricks = new Array();
+    var tile = tiles[tileid];
 
-//     for (var i = 0; i < tiles.length; i++) {
-
-//         if ((tiles[i].y < tile.y + 2) && (tiles[i].y > tile.y - 2) && (tiles[i].x < tile.x + 2) && (tiles[i].x > tile.x - 2)) {
-//             bricks.push(tiles[i]);
-
-//         }
-//     }
+    $("#boxtitle").html("ruta nummer " + tile.id + ", y:" + tile.y + ", x:" + tile.x + ", tiletype:" + tile.tiletype);
 
 
+    var bricks = new Array();
 
+    for (var i = 0; i < tiles.length; i++) {
 
-//     document.getElementById("boxarrowtopleft").onclick = function () {
-//         return TileAction(tileid - 1);
-//     }
+        if ((tiles[i].y < tile.y + 2) && (tiles[i].y > tile.y - 2) && (tiles[i].x < tile.x + 2) && (tiles[i].x > tile.x - 2)) {
+            bricks.push(tiles[i]);
 
-//     document.getElementById("boxarrowbottomright").onclick = function () {
-//         return TileAction(tileid + 1);
-//     }
-
-
-//     document.getElementById("boxarrowtopright").onclick = function () {
-//         return TileAction(tileid - 14);
-//     }
-
-//     document.getElementById("boxarrowbottomleft").onclick = function () {
-//         return TileAction(tileid + 14);
-//     }
-
-//     var istoprightbrick = false;
-//     var istopleftbrick = false;
-//     var isbottomrightbrick = false;
-//     var isbottomleftbrick = false;
-
-
-//     $(".tilecontent").addClass("dark");
+        }
+    }
 
 
 
 
-//     for (var i = 0; i < bricks.length; i++) {
-//         var div = document.createElement("div");
+    document.getElementById("boxarrowtopleft").onclick = function () {
+        return TileAction(tileid - 1);
+    }
 
-//         if (bricks[i].specialplacement == "topright") { istoprightbrick = true; }
-//         if (bricks[i].specialplacement == "topleft") { istopleftbrick = true; }
-//         if (bricks[i].specialplacement == "bottomright") { isbottomrightbrick = true; }
-//         if (bricks[i].specialplacement == "bottomleft") { isbottomleftbrick = true; }
-
-
+    document.getElementById("boxarrowbottomright").onclick = function () {
+        return TileAction(tileid + 1);
+    }
 
 
-//         $(div).addClass("tilebig");
+    document.getElementById("boxarrowtopright").onclick = function () {
+        return TileAction(tileid - 14);
+    }
 
-//         $(div).css("background-image", "url('content/imgs/" + bricks[i].gang.gangc
-//             olor + "/tile" + bricks[i].mapnr + ".png')");
+    document.getElementById("boxarrowbottomleft").onclick = function () {
+        return TileAction(tileid + 14);
+    }
 
-//         $(div).css("top", height);
-//         $(div).css("z-index", i);
-//         $(div).css("left", width);
+    var istoprightbrick = false;
+    var istopleftbrick = false;
+    var isbottomrightbrick = false;
+    var isbottomleftbrick = false;
+
+
+    $(".tilecontent").addClass("dark");
+
+
+
+
+    for (var i = 0; i < bricks.length; i++) {
+        var div = document.createElement("div");
+
+        if (bricks[i].specialplacement == "topright") { istoprightbrick = true; }
+        if (bricks[i].specialplacement == "topleft") { istopleftbrick = true; }
+        if (bricks[i].specialplacement == "bottomright") { isbottomrightbrick = true; }
+        if (bricks[i].specialplacement == "bottomleft") { isbottomleftbrick = true; }
+
+
+
+
+        $(div).addClass("tilebig");
+
+        $(div).css("background-image", "url('content/imgs/" + bricks[i].gangcolor + "/tile" + bricks[i].mapnr + ".png')");
+
+        $(div).css("top", height);
+        $(div).css("z-index", i);
+        $(div).css("left", width);
 
        
 
-//         var items = bricks[i].items;
+        var items = bricks[i].items;
 
-//         //renderBigMapItems(items,width,height);
+        //renderBigMapItems(items,width,height);
         
 
-//         target.appendChild(div);
+        target.appendChild(div);
 
-//         $("#tile" + bricks[i].id).children().removeClass("dark");
+        $("#tile" + bricks[i].id).children().removeClass("dark");
 
-//         width = width + 120;
-//         height = height + 68;
+        width = width + 120;
+        height = height + 68;
 
-//         if ((i + 1) % 3 == 0) {
+        if ((i + 1) % 3 == 0) {
 
-//             width = startwidth - 120;
-//             startwidth = startwidth - 120;
+            width = startwidth - 120;
+            startwidth = startwidth - 120;
 
-//             height = startheight + 68;
-//             startheight = startheight + 68;
+            height = startheight + 68;
+            startheight = startheight + 68;
 
-//         }
+        }
 
-//     }
+    }
 
-//     HideArrow("boxarrowtopleft", istopleftbrick);
-//     HideArrow("boxarrowtopright", istoprightbrick);
-//     HideArrow("boxarrowbottomright", isbottomrightbrick);
-//     HideArrow("boxarrowbottomleft", isbottomleftbrick);
-
-
-
-//     $("#box").css("display", "block");
+    HideArrow("boxarrowtopleft", istopleftbrick);
+    HideArrow("boxarrowtopright", istoprightbrick);
+    HideArrow("boxarrowbottomright", isbottomrightbrick);
+    HideArrow("boxarrowbottomleft", isbottomleftbrick);
 
 
-// }
 
-// function renderBigMapItems(items,width,height) {
-//     var bonuswidth = 0;
-//     var bonusheight = 54;
-//     var positioncounter = 0;
-//     var bonusz = 0;
+    $("#box").css("display", "block");
+
+
+}
+
+function renderBigMapItems(items,width,height) {
+    var bonuswidth = 0;
+    var bonusheight = 54;
+    var positioncounter = 0;
+    var bonusz = 0;
     
-//     var target = document.getElementById("boxcontent");
+    var target = document.getElementById("boxcontent");
 
-//     for (var k = 0; k < items.length; k++) {
-
-
-//         if (positioncounter % 2 != 0) { bonusheight = 76; bonusz = 2; } else { bonusheight = 54; bonusz = 0; }
-
-//         var divimg = document.createElement("div");
+    for (var k = 0; k < items.length; k++) {
 
 
+        if (positioncounter % 2 != 0) { bonusheight = 76; bonusz = 2; } else { bonusheight = 54; bonusz = 0; }
 
-
-
-//         $(divimg).addClass("tilebig");
-//         $(divimg).css("z-index", 100000 + bonusz);
-//         $(divimg).css("top", height + bonusheight);
-//         $(divimg).css("left", width + 60 + bonuswidth);
-//         $(divimg).css("width", "50px");
-//         $(divimg).css("height", "60px");
-//         var img = document.createElement("img");
-
-//         if (items[k].type == "human") {
-//             $(img).css("width", "16px");
-//         }
-//         else {
-//             $(img).css("width", "50px");
-//         }
-//         img.src = items[k].picture;
-
-//         var p = document.createElement("div");
-//         $(p).html(items[k].name);
-//         $(p).css("color", items[k].color);
-
-
-//         $(p).addClass("userinfo");
-//         p.onclick = (function () {
-//             var currentI = items[k];
-//             return function () {
-//                 //alert(currentI.name);
-
-
-
-//                 $("#box").animate({
-
-//                     width: "1100px"
-
-//                 }, 300, function () {
-//                     // Animation complete.
-//                     $("#ItemInfo").slideUp(300, function () {
-
-//                         $("#EgyBar").empty();
-//                         var energy = currentI.energy;
-
-//                         energyboxes = Math.floor(energy / 10);
-//                         energyleft = energy % 10;
-
-//                         var color = "#F2FA07";
-
-//                         if (energy > 60) { color = "#2CFA07"; } else if (energy < 30) { color = "#FF0000"; }
-
-//                         var engybar = document.getElementById("EgyBar");
-
-//                         for (var i = 0; i < energyboxes; i++) {
-//                             var engytext = document.createElement("div");
-//                             $(engytext).addClass("EgyBarFloat");
-//                             $(engytext).css("background-color", color);
-//                             engybar.appendChild(engytext);
-//                         }
-
-//                         var engytext = document.createElement("div");
-//                         $(engytext).addClass("EgyBarFloat");
-//                         $(engytext).css("width", energyleft * 2.3);
-//                         $(engytext).css("background-color", color);
-
-//                         engybar.appendChild(engytext);
-
-
-
-//                         var engytext = document.createElement("div");
-//                         $(engytext).addClass("EgyBarFloatPercent");
-//                         $(engytext).html(energy + "%");
-//                         $(engytext).css("color", color);
-//                         engybar.appendChild(engytext);
+        var divimg = document.createElement("div");
 
 
 
 
 
+        $(divimg).addClass("tilebig");
+        $(divimg).css("z-index", 100000 + bonusz);
+        $(divimg).css("top", height + bonusheight);
+        $(divimg).css("left", width + 60 + bonuswidth);
+        $(divimg).css("width", "50px");
+        $(divimg).css("height", "60px");
+        var img = document.createElement("img");
 
-//                         $("#curhoname").html(currentI.name);
-//                         $("#curhoname").css("color", currentI.color);
-//                         $("#curhocolor").html(currentI.color);
-//                         $("#curhotileid").html(currentI.tileid);
-//                         $("#ITEMIMG").attr("src", currentI.picture);
+        if (items[k].type == "human") {
+            $(img).css("width", "16px");
+        }
+        else {
+            $(img).css("width", "50px");
+        }
+        img.src = items[k].picture;
 
-//                         $("#ItemInfo").slideDown(300);
-//                     });
-//                     //.css("display", "block");
-//                 });
-
-//                 document.getElementById("movecurho").onclick = (function () {
-//                     var currentk = currentI;
-//                     return function () {
-//                         MoveItem(currentk);
-//                     }
-//                 })();
-
-//             }
-
+        var p = document.createElement("div");
+        $(p).html(items[k].name);
+        $(p).css("color", items[k].color);
 
 
-
-//         })();
-
-//         var divenergy = document.createElement("div");
-//         $(divenergy).addClass("energybar");
-//         $(divenergy).css("width", items[k].energy / 3);
-
-//         var color = "#FF0000";
-//         if (items[k].energy > 60) {
-//             color = "#2CFA07";
-//         }
-//         else if (items[k].energy > 30) {
-//             color = "#F2FA07";
-//         }
-
-//         $(divenergy).css("border-color", color);
-
-//         p.appendChild(divenergy);
-
-//         divimg.appendChild(p);
-//         divimg.appendChild(img);
-//         target.appendChild(divimg);
-
-//         bonuswidth = bonuswidth + 30;
-
-//         positioncounter++;
+        $(p).addClass("userinfo");
+        p.onclick = (function () {
+            var currentI = items[k];
+            return function () {
+                //alert(currentI.name);
 
 
-//     }
 
-// }
+                $("#box").animate({
 
+                    width: "1100px"
+
+                }, 300, function () {
+                    // Animation complete.
+                    $("#ItemInfo").slideUp(300, function () {
+
+                        $("#EgyBar").empty();
+                        var energy = currentI.energy;
+
+                        energyboxes = Math.floor(energy / 10);
+                        energyleft = energy % 10;
+
+                        var color = "#F2FA07";
+
+                        if (energy > 60) { color = "#2CFA07"; } else if (energy < 30) { color = "#FF0000"; }
+
+                        var engybar = document.getElementById("EgyBar");
+
+                        for (var i = 0; i < energyboxes; i++) {
+                            var engytext = document.createElement("div");
+                            $(engytext).addClass("EgyBarFloat");
+                            $(engytext).css("background-color", color);
+                            engybar.appendChild(engytext);
+                        }
+
+                        var engytext = document.createElement("div");
+                        $(engytext).addClass("EgyBarFloat");
+                        $(engytext).css("width", energyleft * 2.3);
+                        $(engytext).css("background-color", color);
+
+                        engybar.appendChild(engytext);
+
+
+
+                        var engytext = document.createElement("div");
+                        $(engytext).addClass("EgyBarFloatPercent");
+                        $(engytext).html(energy + "%");
+                        $(engytext).css("color", color);
+                        engybar.appendChild(engytext);
+
+
+
+
+
+
+                        $("#curhoname").html(currentI.name);
+                        $("#curhoname").css("color", currentI.color);
+                        $("#curhocolor").html(currentI.color);
+                        $("#curhotileid").html(currentI.tileid);
+                        $("#ITEMIMG").attr("src", currentI.picture);
+
+                        $("#ItemInfo").slideDown(300);
+                    });
+                    //.css("display", "block");
+                });
+
+                document.getElementById("movecurho").onclick = (function () {
+                    var currentk = currentI;
+                    return function () {
+                        MoveItem(currentk);
+                    }
+                })();
+
+            }
+
+
+
+
+        })();
+
+        var divenergy = document.createElement("div");
+        $(divenergy).addClass("energybar");
+        $(divenergy).css("width", items[k].energy / 3);
+
+        var color = "#FF0000";
+        if (items[k].energy > 60) {
+            color = "#2CFA07";
+        }
+        else if (items[k].energy > 30) {
+            color = "#F2FA07";
+        }
+
+        $(divenergy).css("border-color", color);
+
+        p.appendChild(divenergy);
+
+        divimg.appendChild(p);
+        divimg.appendChild(img);
+        target.appendChild(divimg);
+
+        bonuswidth = bonuswidth + 30;
+
+        positioncounter++;
+
+
+    }
+
+}
 
 function MoveItem(item) {
 
     
     //CloseWindow("box");
-    $(".tilecontent").addClass("darker");
+    //$(".tilecontent").addClass("darker");
+   
 
     //$(".dark").css("opacity", "0.6");
 
@@ -876,9 +906,15 @@ function MoveItem(item) {
 
             tiles[i].status = "moveitem";
 
+        }
+        else {
+            $("#tile" + tiles[i].id).animate({
 
+                opacity: "0.2"
 
-            $("#tile" + tiles[i].id).children().removeClass("darker");
+            }, 500, function () {
+
+            });
         }
     }
 }
@@ -886,6 +922,8 @@ function MoveItem(item) {
 
 function MoveItemToTile(tileid) {
 
+    var positions = $("#tile" + tileid).position();
+    
     
     var oldtileid = activeitem.tileid;
 
@@ -906,17 +944,22 @@ function MoveItemToTile(tileid) {
     tiles.map(function (tile) { tile.status = "showtile"; });
 
 
-    $(".tilecontent").removeClass("darker");
+
+
+    $(".tile").animate({
+
+        opacity: "1.0"
+
+    }, 500, function () {
+        
+    });
 
     $(".ItemInfo").css("display","block");
 
+
     renderItems();
-    //ShowTileInfo(tileid);
-
-
-    //homies[activeitem.id].tileid = tileid;
-    //alert(homies[activeitem.id].tileid);
-
+    movemap(-positions.top + 200, -positions.left + 500);
+    
 }
 
 function TileAction(tileid) {
@@ -955,7 +998,7 @@ function GoToHQ() {
     var gangcolor = user.color;
     
     for (var i = 0; i < tiles.length; i++) {
-        if (tiles[i].tiletype == "hq" && tiles[i].gang.gangcolor == gangcolor) {
+        if (tiles[i].tiletype == "hq" && tiles[i].gangcolor == gangcolor) {
 
             var pos = $("#tile" + tiles[i].id).position();
             //var pos = $("#content").position();
@@ -968,10 +1011,10 @@ function GoToHQ() {
     }
 }
 
-function GoToItem(element) {
+function GoToItem(id) {
 
-    var pos = element.position();
-   // $(identifier).addClass('selectedcurrho');
+    var pos = $("#" + id).parent().parent().position();
+
     
     movemap(-pos.top+200, -pos.left+500);
             
