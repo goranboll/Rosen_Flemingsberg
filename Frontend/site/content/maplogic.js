@@ -3,8 +3,6 @@ var tiles;
 //var homies;
 //var vehicles;
 var activeitem;
-var useronline;
-var user;
 
 
 
@@ -15,42 +13,21 @@ window.onload = function () {
 
     $("#maparea").css("width", $(document).width());
     $("#maparea").css("height", $(document).height());
+    
 
-    user = { "name": "Mathias Fredriksson", "gangid": 1, "color": "B35DED" }
 
-
-    $(".user").append("<span>" + user.name + " | <span class='usercolor'>....</span> | Logga ut</span>");
-    $(".usercolor").css("color", "#" + user.color);
-    $(".usercolor").css("background-color", "#" + user.color);
+    //tiles.push(starttile);
 
     generateTiles();
 
-    generateplayers(100);
+    generateplayers(200);
 
     renderItems();
 
-    rendergangmembers();
 
-}
 
-function rendergangmembers() {
-    for (var i = 0; i < tiles.length; i++) {
-        for (var k = 0; k < tiles[i].items.length; k++) {
-            if (user.color == tiles[i].items[k].color) {
-                var span = document.createElement("span");
-                $(span).html(tiles[i].items[k].name + "| ");
-                
-                span.onclick = (function () {
-                    var currentk = tiles[i].items[k];
-                    return function () {
-                        GoToItem(currentk.id);
-                       //alert(currentk.id);
-                    }
-                })();
-                $(".homies").append(span);
-            }
-        }
-    }
+
+
 }
 
 function movemap(top, left) {
@@ -77,31 +54,12 @@ function get(elclass) {
 
 }
 
-
-
-var c = 1;
-
-function cuniq() {
-
-
-
-    var d = new Date(),
-        m = d.getMilliseconds() + "",
-        u = ++d + m + (++c === 10000 ? (c = 1) : c);
-
-    return u;
-}
-
-
-
-
-
 function generateplayers(numberofplayers) {
-    var colors = new Array("DB42C7", "B35DED", "1EFA3F", "FABF1E", "EB7465", "6BB7DD", "1AFCF0", "E8F908");
+    var colors = new Array("#DB42C7", "#B35DED", "#1EFA3F", "#FABF1E", "#EB7465", "#6BB7DD", "#1AFCF0", "#E8F908");
 
     var images = new Array("hiphop.png", "dealer.png", "gang.png", "homie.png");
-    var firstnames = new Array("Marcus", "David", "Sylvester", "Sverker", "Baltasar", "Tito", "Bulan", "Biffen","Christer");
-    var lastnames = new Array("Birro", "Fjell", "Skarsgård", "Oredson", "Front", "Kamberg", "Mård", "Bofast","Pettersson");
+    var firstnames = new Array("Marcus", "David", "Sylvester", "Sverker", "Baltasar", "Tito", "Bulan", "Biffen");
+    var lastnames = new Array("Birro", "Fjell", "Skarsgård", "Oredson", "Front", "Kamberg", "Mård", "Bofast");
 
 
 
@@ -109,25 +67,24 @@ function generateplayers(numberofplayers) {
     for (var i = 0; i < numberofplayers; i++) {
         var tnr = Math.floor((Math.random() * 192));
         var energy = Math.floor((Math.random() * 100) + 1);
-        var firstname = firstnames[Math.floor((Math.random() *9))];
-        var lastname = lastnames[Math.floor((Math.random() * 9))];
+        var firstname = firstnames[Math.floor((Math.random() * 8))];
+        var lastname = lastnames[Math.floor((Math.random() * 8))];
 
         var gangid = Math.floor((Math.random() * 8));
 
         var color = colors[gangid];
 
-        var id = cuniq();
+
 
         var picture = images[Math.floor((Math.random() * 4))];
-        var homie = { id: id, tileid: tnr, name: firstname + " " + lastname, color: color, picture: "content/imgs/" + picture, energy: energy, gangid: gangid, type: "human", inventory: [] };
+        var homie = { id: i, tileid: tnr, name: firstname + " " + lastname, color: color, picture: "content/imgs/" + picture, energy: energy, gangid: gangid, type: "human" };
         //homies.push({ id: i, tileid: tnr, name: firstname + " " + lastname, color: color, picture: "content/imgs/" + picture, energy: energy, gangid: gangid, type: "human" });
         tiles[tnr].items.push(homie);
 
     }
 
 
-    tiles[85].items.push({ id: 1, tileid: 85, type: "vehicle", name: "saab900", picture: "content/imgs/vehicles/saab900.png", energy: 100, gangid: 1, inventory: [], homies: [] });
-    tiles[85].items.push({ id: 1, tileid: 85, type: "human", name: "Petter Askergren", picture: "content/imgs/gang.png", energy: 100, gangid: 1, inventory: [] });
+    tiles[50].items.push({ id: 1, tileid: 50, type: "vehicle", name: "saab900", picture: "content/imgs/vehicles/saab900.png", energy: 40, gangid: 3 });
 
 
 
@@ -177,19 +134,19 @@ function renderItems() {
             var div = document.createElement("div");
 
             $(div).addClass("itemonmap");
-            div.id = items[z].id;
+
             
             $(div).css("z-index", 100000 + bonusz);
             $(div).css("top", height + bonusheight);
             $(div).css("left", width + 60 + bonuswidth);
             $(div).css("width", "50px");
-            //$(div).css("height", "60px");
+            $(div).css("height", "60px");
 
 
             var p = document.createElement("div");
             
             $(p).html(items[z].name);
-            $(p).css("color", "#" + items[z].color);
+            $(p).css("color", items[z].color);
 
 
             $(p).addClass("userinfo");
@@ -208,7 +165,7 @@ function renderItems() {
 
             img.src = items[z].picture;
             if (items[z].type == "human") {
-                $(img).css("width", "24%");
+                $(img).css("width", "20%");
             }
             else {
                 $(img).css("width", "50px");
@@ -224,63 +181,17 @@ function renderItems() {
     }
 }
 
-function hideelm(elm) {
-
-    $(elm).fadeOut();
-}
-
-function takethetrain(item) {
-
-    var index = tiles[item.tileid].items.indexOf(item);    
-    tiles[item.tileid].items.splice(index, 1);
-
-    var tileid = 107;
-    if (item.tileid == 88) {
-        tileid = 93;       
-    }
-    else if (item.tileid == 107) {
-        tileid = 102;
-    }
-    else if(item.tileid == 93) {
-        tileid = 88;        
-    }
-
-
-    var positions = $("#tile" + tileid).position();
-   
-    
-    item.tileid = tileid;
-    tiles[tileid].items.push(item);
-    movemap(-positions.top + 200, -positions.left + 500);
-     renderItems();
-}
-
-
 function ShowItemInfo(item) {
 
-    $("#entercar").addClass("displaynone");
-    $("#ItemInfo").slideDown();
-
-    //alert(item.id);
-    GoToItem(item.id);
+    alert("erik");
     var energy = item.energy;
 
-    $(".energylevel").html(energy);
+
     $("#curhoname").html(item.name);
-    $("#curhoname").css("color", "#"+item.color);
-    $("#curhoid").html(item.gangid);
+    $("#curhoname").css("color", item.color);
+    $("#curhocolor").html(item.color);
     $("#curhotileid").html(item.tileid);
     $("#ITEMIMG").attr("src", item.picture);
-
-    if (tiles[item.tileid].tiletype == "trainstation") {
-        $("#takethetrain").css("display", "block");
-        document.getElementById("takethetrain").onclick = function () {
-            takethetrain(item);
-        }       
-    }
-    else {
-        $("#takethetrain").css("display", "none");
-    }
 
     document.getElementById("movecurho").onclick = (function () {
         var currentk = item;
@@ -288,68 +199,6 @@ function ShowItemInfo(item) {
             MoveItem(currentk);
         }
     })();
-
-    $("#passengers").empty();
-    if (item.type == "vehicle") { 
-        var passengers = item.homies;
-        for (var i = 0; i < passengers.length; i++) {
-            var a = document.createElement("a");
-            $(a).html(passengers[i].name);
-            a.onclick = (function () {
-                var passenger = passengers[i];
-                return function () {
-                    LeaveCar(passenger, item);
-                }
-            })();
-            $("#passengers").append($(a)); 
-        }
-    
-    }
-
-    var items = tiles[item.tileid].items;
-
-    for (var z = 0; z < items.length; z++) {
-
-        if (items[z].type === "vehicle" && item.gangid === items[z].gangid && item.type === "human") {
-            $("#entercar").removeClass("displaynone");
-
-            var curho = items[z];
-            $("#entercar").click((function () {
-                return function () {
-                    EnterCar(curho, item);
-                }
-
-            })(curho));
-
-        }
-        
-    }
-
-
-
-}
-
-function LeaveCar(passenger, car) {
-
-    var tile = tiles[car.tileid];
-    passenger.tileid = tile.id;
-    tile.items.push(passenger);
-
-    var index = car.homies.indexOf(passenger);
-    car.homies.splice(index, 1);
-    
-    renderItems();
-}
-
-function EnterCar(car, homie) {
-
-    car.homies.push(homie);
-
-    var index = tiles[homie.tileid].items.indexOf(homie);
-    tiles[homie.tileid].items.splice(index, 1);
-
-    renderItems();
-
 
 }
 
@@ -374,14 +223,13 @@ function generateTiles() {
         var div = document.createElement("div");
         div.id = "tile" + i;
 
-        div.onclick = (function () {
-            var currentI = i;
-            return function () {
-                TileAction(currentI);
-            }
+//        div.onclick = (function () {
+//            var currentI = i;
+//            return function () {
+//                TileAction(currentI);
+//            }
 
-        })();
-        
+//        })();
 
 //       
 
@@ -470,9 +318,7 @@ function generateTiles() {
         if (i == 21 || i == 31 || i == 40 || i == 86 || i == 97 || i == 157 || i == 166 || i == 175) {
             mapnumber = "hq";
             tiletype = "hq";
-           
-
-           
+            gangcolor = "";
         }
         else if (y > 6 && y < 9 && x > 4 && x < 11) {
 
@@ -482,8 +328,6 @@ function generateTiles() {
             else {
                 mapnumber = "mainstreet2";
             }
-
-           
 
 
             tiletype = "mainstreet";
@@ -501,22 +345,8 @@ function generateTiles() {
             mapnumber = tiletype;
 
         }
-        
         else {
             tiletype = "generic";
-        }
-
-
-        //tågstationer
-        if(i == 102 || i == 107)
-        {
-            mapnumber = "trainstation2";
-            tiletype = "trainstation";
-        }
-
-        if (i == 88 || i == 93) {
-            mapnumber = "trainstation1";
-            tiletype = "trainstation";
         }
 
 
@@ -560,7 +390,7 @@ function generateTiles() {
             specialplacement = "right";
         }
 
-        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
+        var tile = { id: i, mapnumber: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
 
         tiles.push(tile);
 
@@ -686,7 +516,7 @@ function ShowTileInfo(tileid) {
 
         var items = bricks[i].items;
 
-        //renderBigMapItems(items,width,height);
+        renderBigMapItems(items,width,height);
         
 
         target.appendChild(div);
@@ -871,10 +701,8 @@ function renderBigMapItems(items,width,height) {
 
 function MoveItem(item) {
 
-    
-    //CloseWindow("box");
-    //$(".tilecontent").addClass("darker");
-   
+    CloseWindow("box");
+    $(".tilecontent").addClass("darker");
 
     //$(".dark").css("opacity", "0.6");
 
@@ -890,16 +718,7 @@ function MoveItem(item) {
         if ((Math.abs(tiles[i].x - tile.x)) + (Math.abs(tiles[i].y - tile.y)) < potentialdistance) {
 
             tiles[i].status = "moveitem";
-
-        }
-        else {
-            $("#tile" + tiles[i].id).animate({
-
-                opacity: "0.2"
-
-            }, 500, function () {
-
-            });
+            $("#tile" + tiles[i].id).children().removeClass("darker");
         }
     }
 }
@@ -907,15 +726,13 @@ function MoveItem(item) {
 
 function MoveItemToTile(tileid) {
 
-    var positions = $("#tile" + tileid).position();
-    
-    
+
     var oldtileid = activeitem.tileid;
 
     var newtile = tiles[tileid];
     var oldtile = tiles[oldtileid];
-   //var position = ($("#tile" + tileid).position());
-   //alert(position.left + "," + position.top);
+
+
     var diff = Math.abs(newtile.x - oldtile.x) + Math.abs(newtile.y - oldtile.y);
 
     activeitem.energy -= (diff * 20);
@@ -929,28 +746,24 @@ function MoveItemToTile(tileid) {
     tiles.map(function (tile) { tile.status = "showtile"; });
 
 
-
-
-    $(".tile").animate({
-
-        opacity: "1.0"
-
-    }, 500, function () {
-        
-    });
-
-    $(".ItemInfo").css("display","block");
-
+    $(".tilecontent").removeClass("darker");
 
     renderItems();
-    movemap(-positions.top + 200, -positions.left + 500);
-    
+    ShowTileInfo(tileid);
+
+
+    //homies[activeitem.id].tileid = tileid;
+    //alert(homies[activeitem.id].tileid);
+
 }
 
 function TileAction(tileid) {
-    
+
     var tilestatus = tiles[tileid].status;
     switch (tilestatus) {
+        case "showtile":
+            ShowTileInfo(tileid);
+            break;
         case "moveitem":
             MoveItemToTile(tileid);
 
@@ -978,29 +791,3 @@ function HideArrow(element, variable) {
     }
 }
 
-function GoToHQ() {
-
-    var gangcolor = user.color;
-    
-    for (var i = 0; i < tiles.length; i++) {
-        if (tiles[i].tiletype == "hq" && tiles[i].gangcolor == gangcolor) {
-
-            var pos = $("#tile" + tiles[i].id).position();
-            //var pos = $("#content").position();
-
-           
-           // alert(pos.left);
-           // alert(pos.top);
-            movemap(-pos.top, -pos.left);
-        }
-    }
-}
-
-function GoToItem(id) {
-
-    var pos = $("#" + id).parent().parent().position();
-
-    
-    movemap(-pos.top+200, -pos.left+500);
-            
-}
