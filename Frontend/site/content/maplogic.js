@@ -191,6 +191,21 @@ function renderItems() {
             $(p).html(items[z].name);
             $(p).css("color", "#" + items[z].color);
 
+            var divenergy = document.createElement("div");
+            $(divenergy).addClass("energybar");
+            $(divenergy).css("width", items[z].energy / 3);
+
+            var color = "#FF0000";
+            if (items[z].energy > 60) {
+                color = "#2CFA07";
+            }
+            else if (items[z].energy > 30) {
+                color = "#F2FA07";
+            }
+
+            $(divenergy).css("border-color", color);
+
+            p.appendChild(divenergy);
 
             $(p).addClass("userinfo");
 
