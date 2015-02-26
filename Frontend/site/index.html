@@ -6,7 +6,10 @@
     <title>index</title>
     <link rel="stylesheet" type="text/css" href="content/Site.css" />
      <script src="jquery-1.8.2.js" type="text/javascript"></script> 
-     <script src="jquery-ui-1.8.24.js" type="text/javascript"></script> 
+     <script src="jquery-ui-1.8.24.js" type="text/javascript"></script>
+     <script src="jquery.zoomooz.min.js" type="text/javascript"></script> 
+      <script src="jquery.transform2d.js" type="text/javascript"></script> 
+     
      <!--<script src="jquery.panzoom.js"></script>-->
 
    
@@ -21,12 +24,15 @@
 </div>
 
 <div class="mapcontroller boxstyle">
-<div><a href="#" id="gotohq"><img src="content/imgs/buttons/hq.png" class="cursorpointer"/></a></div>
+<div><a href="#" id="gotohq"><img src="content/imgs/BUTTONS/hq.png" class="cursorpointer"/></a></div>
 <!--<button class="zoom-in btn">+</button>
 <button class="zoom-out btn">-</button>
 
 <button class="reset btn">100%</button>-->
-
+<div class="">
+   <a href="#" onclick="zoom(0.2)"><img src="content/imgs/BUTTONS/zoomin.png" class="cursorpointer"/></a>
+   <a href="#" onclick="zoom(-0.2)"><img src="content/imgs/BUTTONS/zoomout.png" class="cursorpointer"/></a>
+</div>
 <div id="boxarrowtopleft" class="arrow" onclick="movemap('+=191','+=240')"></div>
     <div id="boxarrowbottomright" class="arrow"  onclick="movemap('-=191','-=240')"></div>
     <div id="boxarrowbottomleft" class="arrow" onclick="movemap('-=191','+=240')"></div>

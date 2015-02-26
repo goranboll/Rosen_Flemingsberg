@@ -5,8 +5,30 @@ var tiles;
 var activeitem;
 var useronline;
 var user;
+var zoomlevel = 1;
+
+$(function () {
+    $("#content").draggable();
+});
+
+function zoom(value) {
+    zoomlevel += value;
 
 
+   // $("#content").css("transform", "scale(" + zoomlevel + ")");
+
+    $("#content").animate({
+
+        transform: "scale("+zoomlevel+")"
+        
+
+
+    }, 1000, function () {
+        // Animation complete.
+    });
+
+
+}
 
 window.onload = function () {
 
@@ -76,10 +98,7 @@ function movemap(top, left) {
 
 }
 
-function zoom() {
-    alert("hej");
-    $("#content").animate({ 'zoom': 1.5 }, 400);
-}
+
 
 function get(elclass) {
     $("." + elclass).css("display", "block");
