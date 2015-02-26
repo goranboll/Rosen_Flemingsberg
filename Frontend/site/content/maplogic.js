@@ -547,15 +547,25 @@ function generateTiles() {
 
 
         //tågstationer
-        if(i == 102 || i == 107)
-        {
-            mapnumber = "trainstation2";
+        if (i == 102 || i == 107 || i == 88 || i == 93) {
             tiletype = "trainstation";
-        }
+             
+            if (i == 102) {
+                mapnumber = "trainstation2";
 
-        if (i == 88 || i == 93) {
-            mapnumber = "trainstation1";
-            tiletype = "trainstation";
+            } else if(i == 107)
+            {
+                mapnumber = "trainstation3";
+            } else if(i == 88)
+            {
+                mapnumber = "trainstation4";
+            } else
+            {
+                mapnumber = "trainstation1";
+            }
+
+
+           
         }
 
 
