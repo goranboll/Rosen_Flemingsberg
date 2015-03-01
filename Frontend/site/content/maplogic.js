@@ -6,6 +6,8 @@ var activeitem;
 var useronline;
 var user;
 var zoomlevel = 1;
+var screensizex;
+var screensizey;
 
 $(function () {
     $("#content").draggable();
@@ -59,6 +61,12 @@ window.onload = function () {
     renderItems();
 
     rendergangmembers();
+
+
+    screensizex = $("body").width(); ;
+    screensizey = $("body").height();
+    
+   
 
 }
 
@@ -1073,6 +1081,6 @@ function GoToItem(element) {
 
     var pos = element.position();
     
-    movemap(-pos.top+200, -pos.left+500);
+    movemap(-pos.top+(screensizey/2)-90, -pos.left+(screensizex/2)-120);
             
 }
