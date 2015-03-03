@@ -15,14 +15,26 @@ $(function () {
 
 function zoom(value) {
     zoomlevel += value;
-
-
-   // $("#content").css("transform", "scale(" + zoomlevel + ")");
+    var left;
+    
+    if (value > 0) {
+        left = "-=191";
+        top = "-=191";
+    }
+    else
+    {
+        left = "+=191";
+        top: "+=191";
+    }
+   
 
     $("#content").animate({
 
-        transform: "scale("+zoomlevel+")"
-        
+        transform: "scale("+zoomlevel+")",
+        left: left,
+        top: top
+     
+
 
 
     }, 1000, function () {
