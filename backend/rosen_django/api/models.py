@@ -1,12 +1,8 @@
 from django.db import models 
 from django.contrib.auth.models import AbstractUser
-<<<<<<< HEAD
 
-
-   
-=======
 import random
->>>>>>> origin/master
+
 
   
 TILE_TYPES = (
@@ -62,8 +58,6 @@ class Tile(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     picture = models.CharField(max_length=100)
-<<<<<<< HEAD
-=======
     gang_id = models.IntegerField()
     mapvariant = models.IntegerField()
 
@@ -71,11 +65,11 @@ class Item(models.Model):
     tile = models.ForeignKey(Tile)
     name = models.CharField(max_length=50)
     picture = models.CharField(max_length=100)
->>>>>>> origin/master
+
     gang = models.ForeignKey(Gang)
     mapvariant = models.IntegerField
 
-<<<<<<< HEAD
+
 class Car(Item):
     passengers = model.ForeignKey(Homie)
     
