@@ -1,7 +1,13 @@
 from django.db import models 
 from django.contrib.auth.models import AbstractUser
 
+
 import random
+
+
+class Homie(Item):
+    pass
+   
 
 
   
@@ -39,15 +45,6 @@ GANG_COLORS = (
     (8, 'E8F908'),
 
     )
-
-class Item(models.Model):
-    tile = models.ForeignKey(Tile)
-    name = models.CharField(max_length=50)
-    picture = models.CharField(max_length=100)
-    gang = models.ForeignKey(Gang)
-    energy = models.IntegerField()
-    type = models.IntegerField(choices=ITEM_TYPES, default=1)
-
 class Gang(models.Model):
     name = models.CharField(max_length=30)
     color = models.IntegerField(max_length=10)
@@ -58,6 +55,7 @@ class Tile(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     picture = models.CharField(max_length=100)
+
     gang_id = models.IntegerField()
     mapvariant = models.IntegerField()
 
@@ -100,6 +98,20 @@ class Map(models.Model):
             map.append(tile)
         return map
 
+
+    gang = model.ForeignKey(Gang)
+    mapvariant = models.IntegerField
+
+class Item(models.Model):
+    tile = models.ForeignKey(Tile)
+    name = models.CharField(max_length=50)
+    picture = models.CharField(max_length=100)
+    gang = models.ForeignKey(Gang)
+    energy = models.IntegerField()
+    type = models.IntegerField(choices=ITEM_TYPES, default=1)
+
+class Car(Item):
+    passengers = model.ForeignKey(Homie)
 
 
 
