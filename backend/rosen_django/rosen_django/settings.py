@@ -22,7 +22,7 @@ SECRET_KEY = '095==h1$v%%k8=j7+2!#i5x!xy#6(b2%nmpi31q&5+k(+kieb3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rosen_django.api',
-    'corsheaders'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -46,11 +45,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+   
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    
 )
 
 ROOT_URLCONF = 'rosen_django.urls'
@@ -66,9 +64,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pythongen',
         'USER': 'pyttan',
-        'PASSWORD' :'ik70hv71',
+        'PASSWORD' : 'ik70hv71',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '3306',
 
     }
 }
@@ -87,7 +85,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
@@ -97,8 +94,6 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ],
-    
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
-CORS_ORIGIN_ALLOW_ALL = True
