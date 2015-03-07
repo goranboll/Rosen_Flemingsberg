@@ -1,6 +1,7 @@
-from rosen_django.api.models import Homie
+from rosen_django.api.models import Homie, Map
 from rosen_django.api.serializers import HomiesListSerializer, UserSerializer
 from rest_framework import generics
+from rest_framework.views import APIView
 from django.contrib.auth.models import UserManager, User
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
@@ -16,3 +17,9 @@ class RegisterAPIView(generics.CreateAPIView):
         return Response("kiss")
     def get(self, request):
         return Response("bajs")
+
+class GenerateMapAPIView(APIView):
+    def post(self, request):
+        map = Map.objects.create()
+        mappy = map.generate_map()
+        return Response(mappy)
