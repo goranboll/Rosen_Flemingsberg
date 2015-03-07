@@ -77,17 +77,6 @@ class Homie(Item):
     pass
 
 
-
-
-
-
-    
-
-
-
-=======
->>>>>>> origin/master
-
 class Homie(Item):
     banana = models.CharField(max_length=10)
 
