@@ -37,6 +37,7 @@ GANG_COLORS = (
     (8, 'E8F908'),
 
     )
+# hej
 class Gang(models.Model):
     name = models.CharField(max_length=30)
     color = models.IntegerField(max_length=10)
