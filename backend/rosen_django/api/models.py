@@ -46,10 +46,11 @@ class Gang(models.Model):
 
 class Tile(models.Model):
     type = models.IntegerField(choices=TILE_TYPES, default=1)
+    idmap = models.IntegerField()
+   # mapid = models.IntegerField()
     x = models.IntegerField()
     y = models.IntegerField()
     picture = models.CharField(max_length=100)
-
     gang_id = models.IntegerField()
     mapvariant = models.IntegerField()
 
@@ -57,6 +58,7 @@ class Item(models.Model):
     tile = models.ForeignKey(Tile)
     name = models.CharField(max_length=50)
     picture = models.CharField(max_length=100)
+    
 
     gang = models.ForeignKey(Gang)
     mapvariant = models.IntegerField()
@@ -64,6 +66,7 @@ class Item(models.Model):
 
 class Homie(Item):
     banana = models.CharField(max_length=10)
+    strenght = models.IntegerField()
     
 class Car(Item):
     passengers = models.ForeignKey(Homie)
@@ -82,12 +85,13 @@ MAP_HEIGHT = 14
 class Map(models.Model):
     def generate_map(self):
         map = [];
-        for i in range(1,196):
+        for i in range(0,196):
             tile = Tile.objects.create(
-            y = 1,#i/MAP_WIDTH
-            x = 1,#i%MAP_WIDTH
+            y = i/MAP_WIDTH +1,
+            x = i%MAP_WIDTH +1,
             mapvariant = random.randint(1, 6),
-            gang_id = 0
+            gang_id = 0,
+            idmap = self.id
             )
             map.append(tile)
         return map
