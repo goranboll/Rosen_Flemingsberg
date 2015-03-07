@@ -3,13 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 
 import random
-
-
-class Homie(Item):
-    pass
-   
-
-
   
 TILE_TYPES = (
     (1, 'Generic'),
@@ -66,18 +59,18 @@ class Item(models.Model):
     picture = models.CharField(max_length=100)
 
     gang = models.ForeignKey(Gang)
-    mapvariant = models.IntegerField
-
-
-class Car(Item):
-    passengers = model.ForeignKey(Homie)
-    
-class Homie(Item):
-    pass
+    mapvariant = models.IntegerField()
 
 
 class Homie(Item):
     banana = models.CharField(max_length=10)
+    
+class Car(Item):
+    passengers = models.ForeignKey(Homie)
+    
+
+
+
 
 #class Car(Item):
 #    passengers = models.ForeignKey(Homie)
@@ -98,21 +91,6 @@ class Map(models.Model):
             )
             map.append(tile)
         return map
-
-
-    gang = model.ForeignKey(Gang)
-    mapvariant = models.IntegerField
-
-class Item(models.Model):
-    tile = models.ForeignKey(Tile)
-    name = models.CharField(max_length=50)
-    picture = models.CharField(max_length=100)
-    gang = models.ForeignKey(Gang)
-    energy = models.IntegerField()
-    type = models.IntegerField(choices=ITEM_TYPES, default=1)
-
-class Car(Item):
-    passengers = model.ForeignKey(Homie)
 
 
 
