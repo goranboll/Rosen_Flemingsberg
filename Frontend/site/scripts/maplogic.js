@@ -66,13 +66,12 @@ window.onload = function () {
     });
 
 
-    generateTiles();
+   //generateTiles();
 
-    generateplayers(100);
 
-    renderItems();
-
-    rendergangmembers();
+    generateTiles2();
+   
+    //rendergangmembers();
 
 
     screensizex = $("body").width(); ;
@@ -418,22 +417,32 @@ function EnterCar(car, homie) {
 
 }
 
+function generateTiles2()
+{
+    var api_url = 'http://localhost:8000/api'; 
+    
+   $.ajax({
+      //type: 'POST',
+      url: api_url + '/getmap/13/'
+      
+    }).success(function(response) {
+       
+       tiles = response;
+       
+       generateTiles(response)
+      
 
-function generateTiles() {
+       
+       
+    });
+    
+}
+
+function generateTiles(tiles) {
 
     var content = document.getElementById("content");
 
-    var gangs = [
-        { id: 1, gangcolor: "1AFCF0" },
-        { id: 2, gangcolor: "E8F908" },
-        { id: 3, gangcolor: "EB7465" },
-        { id: 4, gangcolor: "6BB7DD" },
-        { id: 5, gangcolor: "1EFA3F" },
-        { id: 6, gangcolor: "FABF1E" },
-        { id: 7, gangcolor: "B35DED" },
-        { id: 8, gangcolor: "DB42C7" },
-
-        ];
+  
 
     startwidth = 1600;
     var width = 1600;
@@ -441,16 +450,15 @@ function generateTiles() {
     var startheight = 0;
     var y = 1;
     var x = 1;
-    var tiletype = "generic";
-    var business = ["carstore", "weaponstore", "unemploymentoffice", "courthouse", "policestation", "bikeandmopedstore", "hospital", "cityhall"];
-    shuffle(business);
-    var occupied = false;
-    //var gangcolor = "";
-    var gang = { id: 0, gangcolor: "" };
 
-    for (var i = 0; i < 196; i++) {
+  
+    var occupied = false;
+    
+    
+
+    for (var i = 0; i < tiles.length; i++) {
         var div = document.createElement("div");
-        div.id = "tile" + i;
+        div.id = "tile" + tiles[i].mapvariant;
 
         div.onclick = (function () {
             var currentI = i;
@@ -461,34 +469,6 @@ function generateTiles() {
         })();
         
 
-//       
-
-//        div.onmouseover = (function () {
-
-//            var dav = div;
-
-
-//            return function () {
-
-//                $(dav).css("margin", "2px");
-
-//            }
-
-//        })();
-
-
-//        div.onmouseout = (function () {
-
-//            var dav = div;
-
-
-//            return function () {
-
-//                $(dav).css("margin", "0px");
-
-//            }
-
-//        })();
 
 
         var tilecontent = document.createElement("div");
@@ -499,161 +479,22 @@ function generateTiles() {
 
 
 
-        if (i > 10 && y < 5 && x > 8) {
-            occupied = true;
-            gang = gangs[0];
-
-        }
-        else if (y > 1 && y < 5 && x > 4 && x < 9) {
-            occupied = true;
-            gang = gangs[1];
-
-        }
-        else if (y > 0 && y < 5 && x < 4) {
-            occupied = true;
-            gang = gangs[2];
-
-        }
-        else if (y > 5 && y < 9 && x < 4) {
-            occupied = true;
-            gang = gangs[3];
-
-        }
-        else if (y > 5 && y < 9 && x > 10) {
-            occupied = true;
-            gang = gangs[4];
-
-        }
-        else if (y > 9 && x > 10) {
-            occupied = true;
-            gang = gangs[5];
-
-        }
-        else if (y > 9 && x < 6) {
-            occupied = true;
-            gang = gangs[6];
-
-        }
-        else if (y > 9 && x > 6 && x < 10) {
-            occupied = true;
-            gang = gangs[7];
-
-        }
-        else {
-            gang = { id: 0, gangcolor: "" };
-        }
-
-        var mapnumber = Math.floor((Math.random() * 6) + 1);
-
-        if (i == 21 || i == 31 || i == 40 || i == 86 || i == 97 || i == 157 || i == 166 || i == 175) {
-            mapnumber = "hq";
-            tiletype = "hq";
-           
-
-           
-        }
-        else if (y > 6 && y < 9 && x > 4 && x < 11) {
-
-            if (y == 7) {
-                mapnumber = "mainstreet";
-            }
-            else {
-                mapnumber = "mainstreet2";
-            }
-
-           
-
-
-            tiletype = "mainstreet";
-
-        }
-        else if ((y == 6 || y == 9) && (x > 4 && x < 11)) {
-
-            if (x == 5 || x == 10) {
-                tiletype = "gasstation";
-            }
-            else {
-                tiletype = business.splice(0, 1);
-            }
-
-            mapnumber = tiletype;
-
-        }
-        
-        else {
-            tiletype = "generic";
-        }
-
-
-        //tågstationer
-        if (i == 102 || i == 107 || i == 88 || i == 93) {
-            tiletype = "trainstation";
-             
-            if (i == 102) {
-                mapnumber = "trainstation2";
-
-            } else if(i == 107)
-            {
-                mapnumber = "trainstation3";
-            } else if(i == 88)
-            {
-                mapnumber = "trainstation4";
-            } else
-            {
-                mapnumber = "trainstation1";
-            }
-
-
-           
-        }
-
-
 
 
         //$(tilecontent).html(tiletype);
 
         $(div).addClass("tile");
 
-        $(div).addClass(gang.id + mapnumber);
-        $(div).css("background-image", "url('content/imgs/" + gang.gangcolor + "/tile" + mapnumber + ".png')");
+        ///$(div).addClass(gang.id + mapnumber);
+        $(div).css("background-image", "url('content/imgs/tile" + tiles[i].mapvariant + ".png')");
 
         //$(div).css("background-image", "url('content/imgs/" + gangcolor + "/tile" + mapnumber + ".png')");
 
 
-        var specialplacement = "none";
-
-        if (i < 16) {
-            specialplacement = "topright";
-        }
-        else if (i > 182) {
-            specialplacement = "bottomleft";
-        }
-        else if (i % 14 == 0) {
-            specialplacement = "bottomright";
-        }
-        else if ((i - 1) % 14 == 0) {
-            specialplacement = "topleft";
-        }
-
-        if (i == 0) {
-            specialplacement = "top";
-        }
-
-        if (i == 196) {
-            specialplacement = "bottom";
-        }
-
-        if (i == 183) {
-            specialplacement = "left";
-        }
-
-        if (i == 14) {
-            specialplacement = "right";
-        }
 
        // var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gangcolor: gangcolor, items: [] }
-        var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gang: gang, items: [] }
-        tiles.push(tile);
+       // var tile = { id: i, mapnr: mapnumber, x: x, y: y, specialplacement: specialplacement, tiletype: tiletype, status: "showtile", occupied: occupied, gang: gang, items: [] }
+       // tiles.push(tile);
 
         $(div).css("top", height);
         $(div).css("z-index", i);
@@ -685,11 +526,15 @@ function generateTiles() {
         
 
 
-
+ 
 
 
 
     }
+    
+     generateplayers(100);
+
+       renderItems();
 }
 
 
@@ -811,154 +656,6 @@ function ShowTileInfo(tileid) {
 
 }
 
-function renderBigMapItems(items,width,height) {
-    var bonuswidth = 0;
-    var bonusheight = 54;
-    var positioncounter = 0;
-    var bonusz = 0;
-    
-    var target = document.getElementById("boxcontent");
-
-    for (var k = 0; k < items.length; k++) {
-
-
-        if (positioncounter % 2 != 0) { bonusheight = 76; bonusz = 2; } else { bonusheight = 54; bonusz = 0; }
-
-        var divimg = document.createElement("div");
-
-
-
-
-
-        $(divimg).addClass("tilebig");
-        $(divimg).css("z-index", 100000 + bonusz);
-        $(divimg).css("top", height + bonusheight);
-        $(divimg).css("left", width + 60 + bonuswidth);
-        $(divimg).css("width", "50px");
-        $(divimg).css("height", "60px");
-        var img = document.createElement("img");
-
-        if (items[k].type == "human") {
-            $(img).css("width", "16px");
-        }
-        else {
-            $(img).css("width", "50px");
-        }
-        img.src = items[k].picture;
-
-        var p = document.createElement("div");
-        $(p).html(items[k].name);
-        $(p).css("color", items[k].color);
-
-
-        $(p).addClass("userinfo");
-        p.onclick = (function () {
-            var currentI = items[k];
-            return function () {
-                //alert(currentI.name);
-
-
-
-                $("#box").animate({
-
-                    width: "1100px"
-
-                }, 300, function () {
-                    // Animation complete.
-                    $("#ItemInfo").slideUp(300, function () {
-
-                        $("#EgyBar").empty();
-                        var energy = currentI.energy;
-
-                        energyboxes = Math.floor(energy / 10);
-                        energyleft = energy % 10;
-
-                        var color = "#F2FA07";
-
-                        if (energy > 60) { color = "#2CFA07"; } else if (energy < 30) { color = "#FF0000"; }
-
-                        var engybar = document.getElementById("EgyBar");
-
-                        for (var i = 0; i < energyboxes; i++) {
-                            var engytext = document.createElement("div");
-                            $(engytext).addClass("EgyBarFloat");
-                            $(engytext).css("background-color", color);
-                            engybar.appendChild(engytext);
-                        }
-
-                        var engytext = document.createElement("div");
-                        $(engytext).addClass("EgyBarFloat");
-                        $(engytext).css("width", energyleft * 2.3);
-                        $(engytext).css("background-color", color);
-
-                        engybar.appendChild(engytext);
-
-
-
-                        var engytext = document.createElement("div");
-                        $(engytext).addClass("EgyBarFloatPercent");
-                        $(engytext).html(energy + "%");
-                        $(engytext).css("color", color);
-                        engybar.appendChild(engytext);
-
-
-
-
-
-
-                        $("#curhoname").html(currentI.name);
-                        $("#curhoname").css("color", currentI.color);
-                        $("#curhocolor").html(currentI.color);
-                        $("#curhotileid").html(currentI.tileid);
-                        $("#ITEMIMG").attr("src", currentI.picture);
-
-                        $("#ItemInfo").slideDown(300);
-                    });
-                    //.css("display", "block");
-                });
-
-                document.getElementById("movecurho").onclick = (function () {
-                    var currentk = currentI;
-                    return function () {
-                        MoveItem(currentk);
-                    }
-                })();
-
-            }
-
-
-
-
-        })();
-
-        var divenergy = document.createElement("div");
-        $(divenergy).addClass("energybar");
-        $(divenergy).css("width", items[k].energy / 3);
-
-        var color = "#FF0000";
-        if (items[k].energy > 60) {
-            color = "#2CFA07";
-        }
-        else if (items[k].energy > 30) {
-            color = "#F2FA07";
-        }
-
-        $(divenergy).css("border-color", color);
-
-        p.appendChild(divenergy);
-
-        divimg.appendChild(p);
-        divimg.appendChild(img);
-        target.appendChild(divimg);
-
-        bonuswidth = bonuswidth + 30;
-
-        positioncounter++;
-
-
-    }
-
-}
 
 function MoveItem(item) {
 

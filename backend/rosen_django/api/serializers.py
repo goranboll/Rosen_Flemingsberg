@@ -1,4 +1,4 @@
-from rosen_django.api.models import Homie
+from rosen_django.api.models import Homie, Tile
 from rest_framework import serializers
 from django.contrib.auth.models import UserManager, User
 
@@ -12,3 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ('username', 'email')
+        
+
+class TileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tile
+        fields = ('type', 'x', 'y','mapvariant','id')
