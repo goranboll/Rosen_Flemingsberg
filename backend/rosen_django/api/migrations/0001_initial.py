@@ -67,8 +67,7 @@ class Migration(migrations.Migration):
             name='Tile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('type', models.IntegerField(default=1, choices=[(1, b'Generic'), (2, b'Carstore'), (3, b'Unemploymentoffice'), (4, b'Courthouse'), (5, b'Policestation'), (6, b'Bikeandmopedstore'), (7, b'Hospital'), (8, b'Cityhall'), (9, b'Mainstreet'), (10, b'Trainstation'), (11, b'HQ'), (12, b'Gasstation')])),
-                ('mapid', models.IntegerField()),
+              
                 ('x', models.IntegerField()),
                 ('y', models.IntegerField()),
                 ('picture', models.CharField(max_length=100)),

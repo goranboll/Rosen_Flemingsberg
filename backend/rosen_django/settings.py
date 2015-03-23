@@ -64,13 +64,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pythongen',
-        'USER': 'pyttan',
-        'PASSWORD' :'ik70hv71',
+        'USER': 'root',
+        'PASSWORD' :'Ankeborg!',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+        'STORAGE_ENGINE': 'MyISAM'
 
-    }
+    },
+    'OPTIONS': {
+         "init_command": "SET foreign_key_checks = 0;",
+    },
+
 }
+
+AUTH_USER_MODEL = 'api.Gang'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

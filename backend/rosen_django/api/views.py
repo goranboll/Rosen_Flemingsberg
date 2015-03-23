@@ -1,5 +1,5 @@
-from rosen_django.api.models import Homie, Map, Tile
-from rosen_django.api.serializers import HomiesListSerializer, UserSerializer, TileSerializer
+from rosen_django.api.models import Homie, Map, Tile, Gang
+from rosen_django.api.serializers import HomiesListSerializer, GangSerializer, TileSerializer, MapSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from django.contrib.auth.models import UserManager, User
@@ -11,13 +11,14 @@ class HomiesListAPIView(generics.ListAPIView):
     queryset = Homie.objects.all()
 
 class RegisterAPIView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Gang.objects.all()
+    serializer_class = GangSerializer
     def post(self, request):
         get_user_model().objects.create_user(request.DATA.get('username'), email=request.DATA.get('email'))
         return Response("kiss")
     def get(self, request):
         return Response("bajs")
+
 
 class GenerateMapAPIView(APIView):
     def get(self, request):
@@ -26,7 +27,13 @@ class GenerateMapAPIView(APIView):
         return Response(mappy)
     
 class GetMapAPIView(generics.ListAPIView):
-    queryset = Tile.objects.all()
-    lookup_field = "idmap"
     serializer_class = TileSerializer
+    def list(self, request, mapid):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset(mapid)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+    def get_queryset(self, mapid):
+
+        return Tile.objects.filter(mapid = str(mapid))
     

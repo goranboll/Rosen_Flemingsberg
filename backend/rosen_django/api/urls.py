@@ -6,5 +6,5 @@ urlpatterns = patterns('',
     url(r'^homies/$', HomiesListAPIView.as_view()),
     url(r'^register/$' , RegisterAPIView.as_view()),
     url(r'^generatemap/$' , GenerateMapAPIView.as_view()),
-    url(r'^getmap/(?P<idmap>\d+)/$' , GetMapAPIView.as_view())
+    url(r'^getmap/(?P<mapid>\d+)/$' , GetMapAPIView.as_view())
 )

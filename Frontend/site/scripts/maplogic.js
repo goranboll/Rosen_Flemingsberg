@@ -419,11 +419,11 @@ function EnterCar(car, homie) {
 
 function generateTiles2()
 {
-    var api_url = 'http://localhost:8000/api'; 
+    var api_url = 'http://localhost:8080/api'; 
     
    $.ajax({
       //type: 'POST',
-      url: api_url + '/getmap/13/'
+      url: api_url + '/getmap/34/'
       
     }).success(function(response) {
        
@@ -475,6 +475,10 @@ function generateTiles(tiles) {
 
         $(tilecontent).addClass("tilecontent");
 
+        for(var j = 0; j < tiles[i].items.length; j++){
+            $(tilecontent).append(tiles[i].items[j].name);
+        }
+
         
 
 
@@ -486,8 +490,10 @@ function generateTiles(tiles) {
         $(div).addClass("tile");
 
         ///$(div).addClass(gang.id + mapnumber);
-        $(div).css("background-image", "url('content/imgs/tile" + tiles[i].mapvariant + ".png')");
-
+        if(tiles[i].tiletype.name === 'generic')
+            $(div).css("background-image", "url('content/imgs/tile" + tiles[i].mapvariant + ".png')");
+        else
+            $(div).css("background-image", "url('content/imgs/tile" + tiles[i].tiletype.name + ".png')");
         //$(div).css("background-image", "url('content/imgs/" + gangcolor + "/tile" + mapnumber + ".png')");
 
 
@@ -532,9 +538,9 @@ function generateTiles(tiles) {
 
     }
     
-     generateplayers(100);
+     //generateplayers(100);
 
-       renderItems();
+       //renderItems();
 }
 
 

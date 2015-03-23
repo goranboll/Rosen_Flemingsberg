@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0001_initial'),
+        ('api', '0015_auto_20150322_1514'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='tile',
-            name='idmap',
+            model_name='item',
+            name='energy',
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
