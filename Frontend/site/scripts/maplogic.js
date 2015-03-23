@@ -204,86 +204,83 @@ function shuffle(array) {
 }
 
 
-function renderItems() {
+function renderItems(items, tilecontent) {
 
-    
+    $(tilecontent).empty();   
 
-    $(".tilecontent").empty();
-    for (var k = 0; k < tiles.length; k++) {
-
-        var height = 40;
-        var width = 40;
-        var bonuswidth = 0;
-        var bonusheight = 0;
-        var positioncounter = 0;
-        var bonusz = 0;
-        var items = tiles[k].items;
+    var height = 40;
+    var width = 40;
+    var bonuswidth = 0;
+    var bonusheight = 0;
+    var positioncounter = 0;
+    var bonusz = 0;
+    //var items = tiles[k].items;
 
 
-        for (var z = 0; z < items.length; z++) {
-            var div = document.createElement("div");
+    for (var z = 0; z < items.length; z++) {
+        var div = document.createElement("div");
 
-            $(div).addClass("itemonmap");
-            div.id = items[z].id;
-            
-            $(div).css("z-index", 100000 + bonusz);
-            $(div).css("top", height + bonusheight);
-            $(div).css("left", width + 60 + bonuswidth);
-            $(div).css("width", "50px");
-            //$(div).css("height", "60px");
+        $(div).addClass("itemonmap");
+        div.id = items[z].id;
+        
+        $(div).css("z-index", 100000 + bonusz);
+        $(div).css("top", height + bonusheight);
+        $(div).css("left", width + 60 + bonuswidth);
+        $(div).css("width", "50px");
+        //$(div).css("height", "60px");
 
 
-            var p = document.createElement("div");
-            
-            $(p).html(items[z].name);
-            $(p).css("color", "#" + items[z].color);
+        var p = document.createElement("div");
+        
+        $(p).html(items[z].name);
+        $(p).css("color", "#" + items[z].color);
 
-            var divenergy = document.createElement("div");
-            $(divenergy).addClass("energybar");
-            $(divenergy).css("width", items[z].energy / 3);
+        var divenergy = document.createElement("div");
+        $(divenergy).addClass("energybar");
+        $(divenergy).css("width", items[z].energy / 3);
 
-            var color = "#FF0000";
-            if (items[z].energy > 60) {
-                color = "#2CFA07";
-            }
-            else if (items[z].energy > 30) {
-                color = "#F2FA07";
-            }
-
-            $(divenergy).css("border-color", color);
-
-            p.appendChild(divenergy);
-
-            $(p).addClass("userinfo");
-
-            p.onclick = (function () {
-                var currentk = items[z];
-                return function () {
-                    //alert("hej");
-                    ShowItemInfo(currentk);
-                }
-            })();
-
-            div.appendChild(p);
-
-            var img = document.createElement("img");
-
-            img.src = items[z].picture;
-            if (items[z].type == "human") {
-                $(img).css("width", "24%");
-            }
-            else {
-                $(img).css("width", "50px");
-            }
-
-            div.appendChild(img);
-            document.getElementById("tile" + tiles[k].id).childNodes[0].appendChild(div);
-
-            bonuswidth = bonuswidth + 30;
-
+        var color = "#FF0000";
+        if (items[z].energy > 60) {
+            color = "#2CFA07";
+        }
+        else if (items[z].energy > 30) {
+            color = "#F2FA07";
         }
 
+        $(divenergy).css("border-color", color);
+
+        p.appendChild(divenergy);
+
+        $(p).addClass("userinfo");
+
+        p.onclick = (function () {
+            var currentk = items[z];
+            return function () {
+                
+                ShowItemInfo(currentk);
+            }
+        })();
+
+        div.appendChild(p);
+
+        var img = document.createElement("img");
+
+        img.src = "content/imgs/" + items[z].picture + ".png";
+        if (items[z].itemtype == "Homie") {
+            $(img).css("width", "24%");
+        }
+        else {
+            $(img).css("width", "50px");
+        }
+
+        div.appendChild(img);
+        //document.getElementById("tile" + tiles[k].id).childNodes[0].appendChild(div);
+        tilecontent.appendChild(div);
+        bonuswidth = bonuswidth + 30;
+
     }
+
+    
 }
 
 function hideelm(elm) {
@@ -317,9 +314,24 @@ function takethetrain(item) {
      renderItems();
 }
 
-
 function ShowItemInfo(item) {
+    
+     var api_url = 'http://localhost:8000/api'; 
+    
+   $.ajax({
+      //type: 'POST',
+      url: api_url + '/gethomie/' + item.id
+      
+    }).success(function(response) {
+       
+       
+      alert("hej");
 
+       
+       
+    });
+    
+    
     $("#entercar").addClass("displaynone");
     $("#ItemInfo").slideDown();
 
@@ -419,11 +431,11 @@ function EnterCar(car, homie) {
 
 function generateTiles2()
 {
-    var api_url = 'http://localhost:8080/api'; 
+    var api_url = 'http://localhost:8000/api'; 
     
    $.ajax({
       //type: 'POST',
-      url: api_url + '/getmap/34/'
+      url: api_url + '/getmap/5/'
       
     }).success(function(response) {
        
@@ -475,8 +487,17 @@ function generateTiles(tiles) {
 
         $(tilecontent).addClass("tilecontent");
 
+        
+        //render items
+       
+        
         for(var j = 0; j < tiles[i].items.length; j++){
-            $(tilecontent).append(tiles[i].items[j].name);
+            renderItems(tiles[i].items, tilecontent);
+            //$(tilecontent).append(tiles[i].items[j].name);
+            
+            
+            
+            
         }
 
         

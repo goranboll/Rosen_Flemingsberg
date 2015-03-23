@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib.auth.models import User
-from rosen_django.api.models import Gang
+from api.models import Gang
 from rest_framework import routers, serializers, viewsets
 from django.contrib import admin
 admin.autodiscover()

@@ -10,7 +10,7 @@ import random
 class Color(models.Model):
     name = models.CharField(max_length=10)
     def __unicode__(self):
-        return name
+        return self.name
 
 # class ItemType(models.Model):
 #     name = models.CharField(max_length=30)
@@ -97,7 +97,7 @@ class Map(models.Model):
             y = i/MAP_WIDTH +1,
             x = i%MAP_WIDTH +1,
             mapvariant = random.randint(1, 6),
-            gang = Gang.objects.get(id=9),
+            gang = Gang.objects.first(),
             mapid = self
 
             )

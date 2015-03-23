@@ -64,8 +64,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pythongen',
-        'USER': 'root',
-        'PASSWORD' :'Ankeborg!',
+        'USER': 'pyttan',
+        'PASSWORD' :'ik70hv71',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'STORAGE_ENGINE': 'MyISAM'

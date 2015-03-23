@@ -15,14 +15,32 @@ class GangSerializer(serializers.ModelSerializer):
         model = Gang 
         fields = ('username', 'email')
         
+class GangColorSerializer(serializers.ModelSerializer):
+    color = serializers.StringRelatedField()
+    class Meta:
+        model = Gang 
+        fields = ('color',)
+ 
+class HomieDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homie
+        fields = ('name','energy')
+        
 class TileTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TileType
         fields = ('name',)
 class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
+     gang = GangColorSerializer()
+     #color = serializers.SerializerMethodField('get_color')
+     #def get_color(self,item):
+      #  return item.gang.Color
+     
+     class Meta:
         model = Item
-        fields=('id', 'name' , 'energy')
+        fields=('id', 'name' , 'energy','picture','gang','itemtype')
+
+
 class TileSerializer(serializers.ModelSerializer):
     # tiletype = serializers.SerializerMethodField('get_tile_type')
     # def get_tile_type(self, obj):
@@ -33,6 +51,7 @@ class TileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tile
         fields = ('tiletype', 'x', 'y','mapvariant','id', 'items')
+
 class MapSerializer(serializers.ModelSerializer):
     tiles = TileSerializer(many=True)
     class Meta:

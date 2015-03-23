@@ -1,5 +1,5 @@
 from rosen_django.api.models import Homie, Map, Tile, Gang
-from rosen_django.api.serializers import HomiesListSerializer, GangSerializer, TileSerializer, MapSerializer
+from rosen_django.api.serializers import HomiesListSerializer, GangSerializer, TileSerializer, MapSerializer,HomieDetailsSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from django.contrib.auth.models import UserManager, User
@@ -8,6 +8,10 @@ from rest_framework.response import Response
 
 class HomiesListAPIView(generics.ListAPIView):
     serializer_class = HomiesListSerializer
+    queryset = Homie.objects.all()
+    
+class HomieAPIView(generics.RetrieveAPIView):
+    serializer_class = HomieDetailsSerializer
     queryset = Homie.objects.all()
 
 class RegisterAPIView(generics.CreateAPIView):
